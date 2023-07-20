@@ -6,6 +6,8 @@ class Renderer
 {
 public:
 	bool initSurface();
+	bool init_window_with_renderer();
+
 	void quitSurface();
 
 private:

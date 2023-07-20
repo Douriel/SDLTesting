@@ -10,7 +10,8 @@ int main(int argc, char* argv[])
 
     Renderer m_renderer;
 
-    m_renderer.initSurface();
+    m_renderer.init_window_with_renderer();
+
 
     return 1;
 }

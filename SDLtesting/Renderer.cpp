@@ -39,6 +39,38 @@ bool Renderer::initSurface()
 
 }
 
+bool Renderer::init_window_with_renderer()
+{
+    SDL_Event event;
+    SDL_Renderer* renderer;
+    SDL_Window* window;
+    int i;
+    
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        fprintf(stderr,
+            "Couldn't initialize SDL: %s\n", SDL_GetError());
+        exit(1);
+    }
+    if (SDL_CreateWindowAndRenderer(640, 640, 0, &window, &renderer) < 0) {
+        fprintf(stderr,
+            "Window with Renderer could not be created: %s\n", SDL_GetError());
+        exit(1);
+    }
+
+    //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+    SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    for (i = 0; i < 640; ++i)
+        SDL_RenderDrawPoint(renderer, i, i);
+    SDL_RenderPresent(renderer);
+    while (1) {
+        if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
+            break;
+    }
+
+    return false;
+}
+
 void Renderer::quitSurface()
 {
     /* Clean up on exit */
