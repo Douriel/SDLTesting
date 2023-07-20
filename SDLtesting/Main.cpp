@@ -2,10 +2,17 @@
 //
 
 #include <iostream>
+#include "Renderer.h"
 
-int main()
+int main(int argc, char* argv[])
 {
     std::cout << "Hello World!\n";
+
+    Renderer m_renderer;
+
+    m_renderer.initSurface();
+
+    return 1;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
