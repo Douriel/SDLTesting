@@ -3,17 +3,69 @@
 
 #include <iostream>
 #include "Renderer.h"
+#include "KeyTest.h"
+
 
 int main(int argc, char* argv[])
 {
     std::cout << "Hello World!\n";
 
     Renderer m_renderer;
+    // Initialize SDL
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        // Handle initialization error
+        return 1;
+    }
 
-    m_renderer.init_window_with_renderer();
+    // Create a window
+    SDL_Window* window = SDL_CreateWindow("Key Press Check", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
+    if (!window) {
+        // Handle window creation error
+        SDL_Quit();
+        return 1;
+    }
 
+    // Event loop
+    bool quit = false;
+    SDL_Event event;
 
-    return 1;
+    while (!quit) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                quit = true; // Exit the loop if the window is closed
+            }
+            else if (event.type == SDL_KEYDOWN) {
+                // Check which key is pressed
+                switch (event.key.keysym.sym) {
+                case SDLK_UP:
+                    std::cout << "arriba" << std::endl;
+                    break;
+                case SDLK_DOWN:
+                    // Handle the DOWN key press
+                    std::cout << "abajo" << std::endl;
+                    break;
+                case SDLK_LEFT:
+                    // Handle the LEFT key press
+                    std::cout << "izquieda" << std::endl;
+                    break;
+                case SDLK_RIGHT:
+                    // Handle the RIGHT key press
+                    std::cout << "derecha" << std::endl;
+                    break;
+                    // Add more cases as needed for other keys
+                default:
+                    break;
+                }
+            }
+        }
+
+        // Your game loop code here...
+    }
+
+    // Cleanup and quit SDL
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+    return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
